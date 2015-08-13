@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Forum | Topics</title>
+	<link rel="stylesheet" href="/style.css">
 </head>
 <body>
 	<header>
@@ -14,7 +15,14 @@
 		<li>
 			<a href='/forum/topics/<%=topics[key].title%>'><h2><%=topics[key].title%></h2></a>
 			<em>created by <%=topics[key].user_id%></em>
-			
+			<h2> Votes:<%=topics[key].votes%> </h2>
+			<form action='/forum/topics/<%=topics[key].id%>?_method=PUT' method="POST">
+				<input class="hidden" name="user_id" value="<%=topics[key].user_id%>">
+				<input class="hidden" name="id" value="<%=topics[key].id%>">
+			<button id = "vote">like</button>
+			</form>
+			<button id="disable-vote" disabled="disabled">liked</button>
+			<h4># of comments: </h4>
 		</li>
 		<%})%>
 	</ul>
