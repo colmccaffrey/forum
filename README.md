@@ -10,11 +10,10 @@ USER STORIES:
 
 *Create user profile with username and image
 *Choose whether to create a new topic or comment on an existing one
-*Can comment on discussions within topics, or start a new one
 *Can sort topics by popularity
 *Vote on existing topics 
 *Can use the application on mobile devices
-*User can see list of user activity by topics created, discussions joined, comments made
+*User can see list of user activity by topics created and comments made
 
 **********Potential features***********
 
