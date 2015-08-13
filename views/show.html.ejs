@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Forum | Topics</title>
+</head>
+<body>
+	<header>
+		<h1>Topics in Forum</h1>
+	</header>
+	<div>
+	<ul>
+	<%Object.keys(topics).forEach(function(key){ %>
+		<li>
+			<a href='/forum/topics/<%=topics[key].title%>'><h2><%=topics[key].title%></h2></a>
+			<em>created by <%=topics[key].user_id%></em>
+		</li>
+		<%})%>
+	</ul>
+</div>
+</body>
+</html>

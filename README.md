@@ -34,7 +34,7 @@ RESTFUL ROUTES:
 *Individual topic- with list of discussions in topic- option to create new discussion or comment on existing one
 	'/forum/topic_name'
 *individual discussion within a topic- option to comment
- '/forum/topic_name/discussi_name'
+ '/forum/topic_name/discussion_name'
 *Can sort topics by popularity
 	'/forum/popular'
 

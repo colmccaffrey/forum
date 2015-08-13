@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Forum | <%=title%> </title>
+</head>
+<body>
+	<header>
+	</h1> Comments for Topic <%=title%></h1>
+	</header>
+	<div>
+		<% Object.keys(comments).forEach(function(key)){ %>
+		<ul>
+			<li><%=comments[key].content%></li>
+			<li>user <%=comments[key].user_id%></li>
+			<%})%>
+		</ul>
+	</div>
+	<div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Forum</title>
+	<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+	<header>
+	<h1>Welcome to the Forum</h1>
+	</header>
+	<div>
+	<form action='/forum/topics' method="GET">
+		<button>All Topics</button>
+	</form>
+		<button id="new">New Topic</button>
+	<div class="add-new">
+		<form action='/forum/topics' method='POST'>
+			<input type = "text" name="title" placeholder="topic title here">
+			<input type = "text" name="name" placeholder="username">
+			<button>Add</button>
+		</form>
+	</div>
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="/main.js"></script>
+	</div>
+</div>
+</body>
+</html>
