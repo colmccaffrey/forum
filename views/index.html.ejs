@@ -11,11 +11,14 @@
 	<h1>Welcome to the Forum</h1>
 	</header>
 	<div id="main">
-		<form action='/forum/topics' method="GET">
-			<button>RECENT TOPICS</button>
+		<form action='/forum/comments/recent' method="GET">
+			<button>RECENT COMMENTS</button>
 		</form>
-		<form action='/forum/popular' method="GET">
+		<form action='/forum/topics/popular' method="GET">
 			<button>POPULAR TOPICS</button>
+		</form>
+		<form action='/forum/topics' method="GET">
+			<button>LATEST TOPICS</button>
 		</form>
 		<button id="new">NEW TOPIC</button>
 		<div>
@@ -26,8 +29,8 @@
 			</form>
 		</div>
 		<button id="join">SIGN UP</button>
-		<div>
-			<form id="add-user" action='/forum/users' method='POST'>
+		<div class="new-user">
+			<form id="add-user" action='/' method='POST'>
 				<input type = "text" name="name" placeholder="username">
 				<button>Join</button>
 			</form>

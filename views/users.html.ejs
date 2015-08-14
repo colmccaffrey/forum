@@ -1,0 +1,15 @@
+<html>
+<body>
+<ul>
+<% Object.keys(users).forEach(function(key){%>
+	<li>
+	<%=users[key].id%>
+	<%=users[key].name%>
+	<%=users[key].img%>
+	</li>
+	
+<%})%>
+</ul>
+
+</body>
+</html>

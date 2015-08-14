@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Forum | Recent Comments</title>
+	<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+	<div id="wrapper">
+		<header>
+		<h1> Recent Comments</h1>
+		</header>
+		<div id="main">
+			<ul>
+			<% Object.keys(recent).forEach(function(key){ %>
+				<li><%=recent[key].content%></li>
+				<em>posted in </em><a href="/forum/topics/<%=recent[key].topic%>"><%=recent[key].topic%></a>
+				<%})%>
+			</ul>
+		</div>
+		<footer id="comment">
+			<form action='/forum/topics' method='POST'>
+					<input type = "text" name="title" placeholder="add new title topic">
+					<input type = "text" name="name" placeholder="username">
+					<button>Add</button>
+				</form>
+		</footer>
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="/main.js"></script>
+	</div>
+</body>
+</html>

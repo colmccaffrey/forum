@@ -24,6 +24,7 @@ CREATE TABLE comments (
 	content TEXT,
 	topic_id INTEGER,
 	user_id INTEGER,
+
 	FOREIGN KEY(topic_id) REFERENCES topics(id),
 	FOREIGN KEY(user_id) REFERENCES users(id)
 );

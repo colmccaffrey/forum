@@ -14,36 +14,57 @@ app.use(urlencoderBodyParser);
 app.use(express.static('css'));
 app.use(methodOverride('_method'));
 
-app.get('/', function(req,res){
+
+app.get('/', function(req,res){ //gets landing page-redirect to RESTFUL route /forums
 	res.redirect('/forum');
 });
 
-app.get('/forum', function(req, res){
+app.get('/forum', function(req, res){ //renders index  with navigation options
 	res.render('index.html.ejs');
 });
 
-app.get('/forum/topics', function(req, res){
+app.get('/forum/topics', function(req, res){ //renders page with a list of all topics by latest first- option to input new topic
 	db.all("SELECT * FROM topics ORDER BY id DESC", function(err, topics){
 		if(err){
 			throw err;
-		};		
-		res.render('show.html.ejs', {topics : topics});
+		};
+		var type="Latest";		
+		res.render('show.html.ejs', {topics : topics, type: type});
 	});
 });
 
-app.get('/forum/popular', function(req, res){
+app.get('/forum/users', function(req, res){ //test function to track users
+	db.all("SELECT * FROM users ORDER BY id DESC", function(err, users){
+		if(err){
+			throw err;
+		};
+		res.render('users.html.ejs', {users: users});
+	});
+});
+
+app.get('/forum/topics/popular', function(req, res){ //renders page with a list of all topics by vote count, popular first- option to input new topic
 	db.all("SELECT * FROM topics ORDER BY votes DESC", function(err, topics){
 		if(err){
 			throw err;
 		};
-		res.render('show.html.ejs', {topics: topics});
+		var type="Popular";
+		res.render('show.html.ejs', {topics: topics, type: type});
 	});
 });
 
-app.get('/forum/topics/:title', function (req, res){
+app.get('/forum/comments/recent', function(req, res){ //renders page with a list of recent  comments and links topic page (list of comments by topic) the comment is posted in are posted in - optiont o add new topic
+	db.all("SELECT comments.content AS content, topics.title AS topic FROM comments INNER JOIN topics ON comments.topic_id = topics.id ORDER BY comments.id DESC", function(err, recent){ 
+		if(err){
+			throw err;
+		};
+		res.render('recent.html.ejs', {recent: recent});
+	});
+});
+
+app.get('/forum/topics/:title', function (req, res){  //renders page with comments from a specific topic and lists how many comments there are in that topic- option to add new comment to topic 
 	var title = req.params.title;
 	db.get("SELECT id FROM topics WHERE title= ?", title, function(err, topic){
-		db.all("SELECT * FROM comments WHERE topic_id = ?", topic.id, function(err, comments){
+		db.all("SELECT * FROM comments WHERE topic_id = ?  ORDER BY id DESC", topic.id, function(err, comments){
 			db.get("SELECT count(*) AS count FROM comments WHERE topic_id = ?", topic.id, function(err, number){
 			if (err){
 				throw err;
@@ -54,13 +75,17 @@ app.get('/forum/topics/:title', function (req, res){
 	});
 });
 
-app.post('/forum/users', function(req, res){
+app.post('/', function(req, res){ //inserts new user data into users table when user selects join from homepage (/forums)
 	db.run("INSERT INTO users (name, img) VALUES (?,?)", req.body.name, 'images/default_avatar.png', function(err){
+		if (err){
+			res.redirect('back');
+		} else{
 		res.redirect('/forum/topics');
-	})
-})
+		};
+	});
+});
 
-app.post('/forum/topics/:title', function (req, res){
+app.post('/forum/topics/:title', function (req, res){ //inserts new comments into database by username and topic whenever user selects add comment anywhere in the app- redirect to list of all comments by topic
 	var title = req.body.title;
 	var userName = req.body.name;
 	var comment = req.body.content;
@@ -78,7 +103,7 @@ app.post('/forum/topics/:title', function (req, res){
 		});
 	});
 
-app.post('/forum/topics', function(req, res){
+app.post('/forum/topics', function(req, res){ //inserts data for new topic and username into tables topics and users, if a username does not already exist the one entered with be added to users by default -redirect to list of all topics
 	var title = req.body.title;
 	var userName = req.body.name;
 	db.get("SELECT * FROM users WHERE name = ?", userName, function(err, user){
@@ -95,16 +120,16 @@ app.post('/forum/topics', function(req, res){
 	});
 });
 
-app.put('/forum/topics/:id', function(req, res){
+app.put('/forum/topics/:id', function(req, res){ //inserts new vote tally for each topic when a user clicks on vote
 	var id = parseInt(req.params.id);
 		db.run("UPDATE topics SET votes= votes+1 WHERE id= ?", id, function(err){
 			if (err){
 				throw err;
 			};
-			res.redirect('/forum/topics');
+			res.redirect('/forum/topics' +  '#' + req.body.id);
 	});
 })
 
-app.listen(3000, function(req, res){
+app.listen(3000, function(req, res){ //listens
 	console.log("listening on port 3000");
 })
