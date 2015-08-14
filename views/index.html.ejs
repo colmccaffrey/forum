@@ -6,24 +6,35 @@
 	<link rel="stylesheet" href="/style.css">
 </head>
 <body>
+	<div id="wrapper">
 	<header>
 	<h1>Welcome to the Forum</h1>
 	</header>
-	<div>
-	<form action='/forum/topics' method="GET">
-		<button>All Topics</button>
-	</form>
-		<button id="new">New Topic</button>
-	<div class="add-new">
-		<form action='/forum/topics' method='POST'>
-			<input type = "text" name="title" placeholder="topic title here">
-			<input type = "text" name="name" placeholder="username">
-			<button>Add</button>
+	<div id="main">
+		<form action='/forum/topics' method="GET">
+			<button>RECENT TOPICS</button>
 		</form>
+		<form action='/forum/popular' method="GET">
+			<button>POPULAR TOPICS</button>
+		</form>
+		<button id="new">NEW TOPIC</button>
+		<div>
+			<form id="add-new" action='/forum/topics' method='POST'>
+				<input type = "text" name="title" placeholder="topic title here">
+				<input type = "text" name="name" placeholder="username">
+				<button>Add</button>
+			</form>
+		</div>
+		<button id="join">SIGN UP</button>
+		<div>
+			<form id="add-user" action='/forum/users' method='POST'>
+				<input type = "text" name="name" placeholder="username">
+				<button>Join</button>
+			</form>
+		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script src="/main.js"></script>
-	</div>
 </div>
 </body>
 </html>

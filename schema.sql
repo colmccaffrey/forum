@@ -12,7 +12,7 @@ PRAGMA foreign_keys = ON;
 
 CREATE TABLE topics (
 	id INTEGER PRIMARY KEY autoincrement,
-	title TEXT,
+	title TEXT not null unique,
 	votes INTEGER,
 	user_id INTEGER,
 	FOREIGN KEY(user_id) REFERENCES users(id)

@@ -23,11 +23,20 @@ app.get('/forum', function(req, res){
 });
 
 app.get('/forum/topics', function(req, res){
-	db.all("SELECT * FROM topics", function(err, topics){
+	db.all("SELECT * FROM topics ORDER BY id DESC", function(err, topics){
 		if(err){
 			throw err;
 		};		
 		res.render('show.html.ejs', {topics : topics});
+	});
+});
+
+app.get('/forum/popular', function(req, res){
+	db.all("SELECT * FROM topics ORDER BY votes DESC", function(err, topics){
+		if(err){
+			throw err;
+		};
+		res.render('show.html.ejs', {topics: topics});
 	});
 });
 
@@ -44,6 +53,12 @@ app.get('/forum/topics/:title', function (req, res){
 		});
 	});
 });
+
+app.post('/forum/users', function(req, res){
+	db.run("INSERT INTO users (name, img) VALUES (?,?)", req.body.name, 'images/default_avatar.png', function(err){
+		res.redirect('/forum/topics');
+	})
+})
 
 app.post('/forum/topics/:title', function (req, res){
 	var title = req.body.title;
@@ -67,9 +82,15 @@ app.post('/forum/topics', function(req, res){
 	var title = req.body.title;
 	var userName = req.body.name;
 	db.get("SELECT * FROM users WHERE name = ?", userName, function(err, user){
-	var id = user.id;
-	db.run("INSERT INTO topics (title, votes, user_id) VALUES (?,?,?)", title, 0, id, function(err){
+		if (user === undefined){		
+			db.run("INSERT INTO users (name, img) VALUES (?,?)", req.body.name, 'images/default_avatar.png', function(err){
+			});
+		} 
+		db.get("SELECT * FROM users WHERE name = ?", userName, function(err, user){
+		var id = user.id;
+			db.run("INSERT INTO topics (title, votes, user_id) VALUES (?,?,?)", title, 0, id, function(err){
 			res.redirect('/forum/topics');
+			});
 		});
 	});
 });

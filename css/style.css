@@ -1,8 +1,4 @@
-.add-new{
-	display: none;
-}
-
-.hidden{
+#add-new, #add-user, .hidden {
 	display: none;
 }
 
