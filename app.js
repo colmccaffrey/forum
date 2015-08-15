@@ -24,7 +24,7 @@ app.get('/forum', function(req, res){ //renders index  with navigation options
 });
 
 app.get('/forum/topics', function(req, res){ //renders page with a list of all topics by latest first- option to input new topic
-	db.all("SELECT topics.title AS title, topics.user_id AS user_id, topics.id AS id, topics.votes AS votes, users.name AS user_name FROM topics INNER JOIN users ON topics.user_id = users.id ORDER BY topics.id DESC", function(err, topics){
+	db.all("SELECT topics.title AS title, topics.user_id AS user_id, topics.id AS id, topics.votes AS votes, users.name AS user_name, users.img AS image FROM topics INNER JOIN users ON topics.user_id = users.id ORDER BY topics.id DESC", function(err, topics){
 		if(err){
 			throw err;
 		};
@@ -43,7 +43,7 @@ app.get('/forum/users', function(req, res){ //test function to track users
 });
 
 app.get('/forum/topics/popular', function(req, res){ //renders page with a list of all topics by vote count, popular first- option to input new topic
-	db.all("SELECT topics.title AS title, topics.user_id AS user_id, topics.id AS id, topics.votes AS votes, users.name AS user_name FROM topics INNER JOIN users ON topics.user_id = users.id ORDER BY topics.votes DESC", function(err, topics){
+	db.all("SELECT topics.title AS title, topics.user_id AS user_id, topics.id AS id, topics.votes AS votes, users.name AS user_name, users.img AS image FROM topics INNER JOIN users ON topics.user_id = users.id ORDER BY topics.votes DESC", function(err, topics){
 		if(err){
 			throw err;
 		};
@@ -52,7 +52,7 @@ app.get('/forum/topics/popular', function(req, res){ //renders page with a list 
 	});
 });
 
-app.get('/forum/comments/recent', function(req, res){ //renders page with a list of recent  comments and links topic page (list of comments by topic) the comment is posted in are posted in - optiont o add new topic
+app.get('/forum/comments/recent', function(req, res){ //renders page with a list of the most recent  comments and links topic page (list of comments by topic) the comment is posted in are posted in - optiont o add new topic
 	db.all("SELECT comments.content AS content, comments.user_id AS user_id, users.name AS user_name, users.id AS id, topics.title AS topic FROM comments INNER JOIN topics INNER JOIN users ON comments.topic_id = topics.id and comments.user_id = users.id ORDER BY comments.id DESC", function(err, recent){ 
 		if(err){
 			throw err;
@@ -64,7 +64,7 @@ app.get('/forum/comments/recent', function(req, res){ //renders page with a list
 app.get('/forum/topics/:title', function (req, res){  //renders page with comments from a specific topic and lists how many comments there are in that topic- option to add new comment to topic 
 	var title = req.params.title;
 	db.get("SELECT id FROM topics WHERE title= ?", title, function(err, topic){
-		db.all("SELECT comments.content AS content, comments.user_id AS user_id, comments.id AS id, users.name AS user_name, users.id AS userId FROM comments INNER JOIN users ON comments.user_id = users.id WHERE topic_id = ?  ORDER BY id DESC", topic.id, function(err, comments){
+		db.all("SELECT comments.content AS content, comments.user_id AS user_id, comments.id AS id, users.name AS user_name, users.img AS image, users.id AS userId FROM comments INNER JOIN users ON comments.user_id = users.id WHERE topic_id = ?  ORDER BY id DESC", topic.id, function(err, comments){
 			db.get("SELECT count(*) AS count FROM comments WHERE topic_id = ?", topic.id, function(err, number){
 			if (err){
 				throw err;
@@ -76,7 +76,7 @@ app.get('/forum/topics/:title', function (req, res){  //renders page with commen
 	});
 
 app.post('/', function(req, res){ //inserts new user data into users table when user selects join from homepage (/forums)
-	db.run("INSERT INTO users (name, img) VALUES (?,?)", req.body.name, 'images/default_avatar.png', function(err){
+	db.run("INSERT INTO users (name, img) VALUES (?,?)", req.body.name, '/images/default_avatar.png', function(err){
 		if (err){
 			var error="That name is already taken";
 			res.render('error.html.ejs', {error: error});

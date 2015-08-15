@@ -26,6 +26,7 @@
 			<h2> <%=number.count%> Comments</h2>
 			<ul>
 			<% Object.keys(comments).forEach(function(key){ %>
+				<li><img id="user-image" src="<%=comments[key].image%>"></li>
 				<li>User <%=comments[key].user_name%></li>
 				<li><h4><%=comments[key].content%></h4></li>
 				<%})%>

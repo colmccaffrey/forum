@@ -27,7 +27,8 @@
 	<%Object.keys(topics).forEach(function(key){ %>
 			<a name="<%=topics[key].id%>"><li></a>
 			<a href='/forum/topics/<%=topics[key].title%>'><h2><%=topics[key].title%></h2></a>
-			<em> created by <%=topics[key].user_name%></em>
+			<li><img id="user-image" src="<%=topics[key].image%>"><em> created by <%=topics[key].user_name%></em>
+			</li>
 			<h2> Votes:<%=topics[key].votes%></h2>
 			<form action='/forum/topics/<%=topics[key].id%>?_method=PUT' method="POST">
 				<input class="hidden" name="user_id" value="<%=topics[key].user_id%>">
