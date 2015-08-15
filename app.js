@@ -24,7 +24,10 @@ app.get('/forum', function(req, res){ //renders index  with navigation options
 });
 
 app.get('/forum/topics', function(req, res){ //renders page with a list of all topics by latest first- option to input new topic
-	db.all("SELECT * FROM topics ORDER BY id DESC", function(err, topics){
+	//db.all("SELECT * FROM topics ORDER BY id DESC", function(err, topics){
+		//db.all("SELECT * FROM users", function(err, authors){
+		//db.all("SELECT users.name AS user_name FROM users INNER JOIN topics WHERE users.id= topics.user_id", function(err, author){
+		db.all("SELECT topics.title AS title, topics.user_id AS user_id, topics.id AS id, topics.votes AS votes, users.name AS user_name FROM topics INNER JOIN users ON topics.user_id = users.id ORDER BY topics.id DESC", function(err, topics){
 		if(err){
 			throw err;
 		};
@@ -38,7 +41,7 @@ app.get('/forum/users', function(req, res){ //test function to track users
 		if(err){
 			throw err;
 		};
-		res.render('users.html.ejs', {users: users});
+		res.render('users.html.ejs', {users: users, author: author});
 	});
 });
 
@@ -71,14 +74,15 @@ app.get('/forum/topics/:title', function (req, res){  //renders page with commen
 			};
 				res.render('new.html.ejs', {comments: comments, title: title, number: number});
 				});
+			});
 		});
 	});
-});
 
 app.post('/', function(req, res){ //inserts new user data into users table when user selects join from homepage (/forums)
 	db.run("INSERT INTO users (name, img) VALUES (?,?)", req.body.name, 'images/default_avatar.png', function(err){
 		if (err){
-			res.redirect('back');
+			var error="That name is already taken";
+			res.render('error.html.ejs', {error: error});
 		} else{
 		res.redirect('/forum/topics');
 		};
@@ -92,6 +96,10 @@ app.post('/forum/topics/:title', function (req, res){ //inserts new comments int
 	db.get("SELECT id FROM topics WHERE title= ?", title, function(err, topic){
 		var topicId = topic.id;
 		db.get("SELECT id FROM users WHERE name=?", userName, function(err, user){
+			if (user === undefined){
+			var error="You must create an account to leave comments.";
+			res.render('error.html.ejs', {error: error});
+			}else{
 			var userId = user.id;
 				db.run("INSERT INTO comments (content, topic_id, user_id) VALUES (?,?,?)", comment, topicId, userId, function(err){
 					if (err){
@@ -99,6 +107,7 @@ app.post('/forum/topics/:title', function (req, res){ //inserts new comments int
 					};
 					res.redirect('/forum/topics/' + req.body.title);
 				});
+				};
 			});
 		});
 	});
