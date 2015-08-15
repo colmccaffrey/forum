@@ -120,7 +120,7 @@ app.post('/forum/topics', function(req, res){ //inserts data for new topic and u
 		db.get("SELECT * FROM users WHERE name = ?", userName, function(err, user){
 		var id = user.id;
 			db.run("INSERT INTO topics (title, votes, user_id) VALUES (?,?,?)", title, 0, id, function(err){
-			res.redirect('/forum/topics');
+			res.redirect('/forum/topics/' + req.body.title);
 			});
 		});
 	});

@@ -21,7 +21,7 @@ CREATE TABLE topics (
 PRAGMA foreign_keys = ON;
 CREATE TABLE comments (
 	id INTEGER PRIMARY KEY autoincrement,
-	content TEXT,
+	content TEXT not null,
 	topic_id INTEGER,
 	user_id INTEGER,
 
