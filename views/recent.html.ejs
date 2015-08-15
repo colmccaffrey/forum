@@ -26,7 +26,8 @@
 			<ul>
 			<% Object.keys(recent).forEach(function(key){ %>
 				<li><%=recent[key].content%></li>
-				<em>posted in </em><a href="/forum/topics/<%=recent[key].topic%>"><%=recent[key].topic%></a>
+				<em>posted by <%=recent[key].user_name%> in </em><a href="/forum/topics/<%=recent[key].topic%>"><%=recent[key].topic%></a>
+
 				<%})%>
 			</ul>
 		</div>
