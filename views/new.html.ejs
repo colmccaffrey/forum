@@ -26,7 +26,7 @@
 			<h2> <%=number.count%> Comments</h2>
 			<ul>
 			<% Object.keys(comments).forEach(function(key){ %>
-				<li>User <%=comments[key].user_id%></li>
+				<li>User <%=comments[key].user_name%></li>
 				<li><h4><%=comments[key].content%></h4></li>
 				<%})%>
 			</ul>

@@ -38,7 +38,7 @@ app.get('/forum/users', function(req, res){ //test function to track users
 		if(err){
 			throw err;
 		};
-		res.render('users.html.ejs', {users: users, author: author});
+		res.render('users.html.ejs', {users: users});
 	});
 });
 
@@ -64,7 +64,7 @@ app.get('/forum/comments/recent', function(req, res){ //renders page with a list
 app.get('/forum/topics/:title', function (req, res){  //renders page with comments from a specific topic and lists how many comments there are in that topic- option to add new comment to topic 
 	var title = req.params.title;
 	db.get("SELECT id FROM topics WHERE title= ?", title, function(err, topic){
-		db.all("SELECT * FROM comments WHERE topic_id = ?  ORDER BY id DESC", topic.id, function(err, comments){
+		db.all("SELECT comments.content AS content, comments.user_id AS user_id, comments.id AS id, users.name AS user_name, users.id AS userId FROM comments INNER JOIN users ON comments.user_id = users.id WHERE topic_id = ?  ORDER BY id DESC", topic.id, function(err, comments){
 			db.get("SELECT count(*) AS count FROM comments WHERE topic_id = ?", topic.id, function(err, number){
 			if (err){
 				throw err;
