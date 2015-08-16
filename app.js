@@ -63,13 +63,15 @@ app.get('/forum/comments/recent', function(req, res){ //renders page with a list
 
 app.get('/forum/topics/:title', function (req, res){  //renders page with comments from a specific topic and lists how many comments there are in that topic- option to add new comment to topic 
 	var title = req.params.title;
-	db.get("SELECT id FROM topics WHERE title= ?", title, function(err, topic){
+	console.log("title " + title)
+	db.get("SELECT id FROM topics WHERE title= ?", req.params.title, function(err, topic){
+		console.log("topicid" +topic.id);
 		db.all("SELECT comments.content AS content, comments.user_id AS user_id, comments.id AS id, users.name AS user_name, users.img AS image, users.id AS userId FROM comments INNER JOIN users ON comments.user_id = users.id WHERE topic_id = ?  ORDER BY id DESC", topic.id, function(err, comments){
 			db.get("SELECT count(*) AS count FROM comments WHERE topic_id = ?", topic.id, function(err, number){
 			if (err){
 				throw err;
 			};
-				res.render('new.html.ejs', {comments: comments, title: title, number: number});
+				res.render('new.html.ejs', {comments: comments, title: title, number: number, topic: topic});
 				});
 			});
 		});
@@ -114,7 +116,7 @@ app.post('/forum/topics', function(req, res){ //inserts data for new topic and u
 	var userName = req.body.name;
 	db.get("SELECT * FROM users WHERE name = ?", userName, function(err, user){
 		if (user === undefined){		
-			db.run("INSERT INTO users (name, img) VALUES (?,?)", req.body.name, 'images/default_avatar.png', function(err){
+			db.run("INSERT INTO users (name, img) VALUES (?,?)", req.body.name, 'http://images/default_avatar.png', function(err){
 			});
 		} 
 		db.get("SELECT * FROM users WHERE name = ?", userName, function(err, user){
