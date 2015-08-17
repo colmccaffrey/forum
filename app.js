@@ -148,6 +148,6 @@ app.put('/forum/topics/:id', function(req, res){ //inserts new vote tally for ea
 	});
 })
 
-app.listen(3000, function(req, res){ //listens
+app.listen(8000, function(req, res){ //listens
 	console.log("listening on port 8000");
 })
