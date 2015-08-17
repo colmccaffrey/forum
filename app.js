@@ -84,7 +84,7 @@ app.get('/forum/topics/:title', function (req, res){  //renders page with commen
 
 app.post('/', function(req, res){ //inserts new user data into users table when user selects join from homepage (/forums)
 	if (req.body.img === ""){
-		var image = "http://127.0.0.1:3000/images/default.png";
+		var image = "http://104.236.1.25:8000/images/default.png";
 	} else{
 		image = req.body.img;
 	}
@@ -126,7 +126,7 @@ app.post('/forum/topics', function(req, res){ //inserts data for new topic and u
 	var userName = req.body.name;
 	db.get("SELECT * FROM users WHERE name = ?", userName, function(err, user){
 		if (user === undefined){		
-			db.run("INSERT INTO users (name, img) VALUES (?,?)", req.body.name, 'http://127.0.0.1:3000/images/default.png', function(err){
+			db.run("INSERT INTO users (name, img) VALUES (?,?)", req.body.name, 'http://104.236.1.25:8000/images/default.png', function(err){
 			});
 		} 
 		db.get("SELECT * FROM users WHERE name = ?", userName, function(err, user){
@@ -149,5 +149,5 @@ app.put('/forum/topics/:id', function(req, res){ //inserts new vote tally for ea
 })
 
 app.listen(3000, function(req, res){ //listens
-	console.log("listening on port 3000");
+	console.log("listening on port 8000");
 })
