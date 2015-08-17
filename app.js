@@ -78,7 +78,7 @@ app.get('/forum/topics/:title', function (req, res){  //renders page with commen
 	});
 
 app.post('/', function(req, res){ //inserts new user data into users table when user selects join from homepage (/forums)
-	db.run("INSERT INTO users (name, img) VALUES (?,?)", req.body.name, '/images/default_avatar.png', function(err){
+	db.run("INSERT INTO users (name, img) VALUES (?,?)", req.body.name, 'http://127.0.0.1:3000/images/default.png', function(err){
 		if (err){
 			var error="That name is already taken";
 			res.render('error.html.ejs', {error: error});
@@ -116,7 +116,7 @@ app.post('/forum/topics', function(req, res){ //inserts data for new topic and u
 	var userName = req.body.name;
 	db.get("SELECT * FROM users WHERE name = ?", userName, function(err, user){
 		if (user === undefined){		
-			db.run("INSERT INTO users (name, img) VALUES (?,?)", req.body.name, 'http://images/default_avatar.png', function(err){
+			db.run("INSERT INTO users (name, img) VALUES (?,?)", req.body.name, 'http://127.0.0.1:3000/images/default.png', function(err){
 			});
 		} 
 		db.get("SELECT * FROM users WHERE name = ?", userName, function(err, user){
