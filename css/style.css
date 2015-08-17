@@ -190,7 +190,7 @@ a:hover {
     transform: rotate(-45deg);
 }
 
-@media (max-width: 46.88em) {
+@media (max-width: 48.66em) {
 
     .custom-menu-3 {
         text-align: left;
@@ -203,3 +203,6 @@ a:hover {
     .pure-u-sm-hidden {
     	display: none;
     }
+
+
+    
