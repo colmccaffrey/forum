@@ -48,7 +48,7 @@ app.get('/forum/topics/popular', function(req, res){ //renders page with a list 
 			throw err;
 		};
 		var type="Popular";
-		res.render('show.html.ejs', {topics: topics, type: type});
+		res.render('popular.html.ejs', {topics: topics, type: type});
 	});
 });
 
