@@ -8,12 +8,30 @@ body{
 	background-image: url('/images/stacked_circles.png')
 }
 
+div#wrapper.landing {
+	background: url('/images/thoughtbrew.jpg') no-repeat center center;
+	background-size: cover;
+	margin: 0;
+
+}
+
+ul#comments, ul#topics, ul#recent {
+	display: block;
+	list-style-type: none;
+}
+ul#comments li, ul#topics li{
+	display: inline-block;
+	margin-left: 1%;
+}
 .landing{
 	text-align: center;
+	height: 100vh;
+	width: 100vw;
 }
 #add-new, #add-user, .new-user, .hidden {
 	display: none;
 }
+
 
 #top{
 	float: right;
@@ -52,6 +70,21 @@ img#user-image{
 	z-index: 101;
 
 }
+#black{
+	background-color: #000000;
+	color: #ffffff;
+	padding-bottom: 1%;
+}
+.home{
+	margin-bottom: 3%;
+}
+#home-container{
+	width: 60%;
+	margin: auto;
+	text-align: center;
+	position: relative;
+	padding-top: 5%;
+}
 .error-new-user{
 	height: 100vh;
 	width: 100vw;
@@ -62,9 +95,13 @@ img#user-image{
 	z-index: 100;
 }
 #align-right{
-	text-align: right;
-}
+	text-align: left;
 
+}
+#text {
+	padding-top: 5%;
+	padding-left: 10%;
+}
 
 #main{
 	padding-bottom: 10%;
@@ -78,9 +115,17 @@ img#user-image{
 	position: fixed;
 	background-color: #cdcdcd;
 }
+a{
+	color: #60776f;
+	text-decoration: none;
+}
 
+a:hover {
+	color: #60928a;
+	text-decoration: none;
+}
 .custom-wrapper {
-    background-color: #ffd390;
+    background-color: #abd9e8;
     margin-bottom: 1em;
     -webkit-font-smoothing: antialiased;
     height: 2.1em;
