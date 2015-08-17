@@ -4,15 +4,15 @@ DROP TABLE IF EXISTS comments;
 
 CREATE TABLE users (
 	id INTEGER PRIMARY KEY autoincrement,
-	name TEXT not null unique,
-	img TEXT
+	name TEXT NOT NULL UNIQUE,
+	img TEXT 
 );
 
 PRAGMA foreign_keys = ON;
 
 CREATE TABLE topics (
 	id INTEGER PRIMARY KEY autoincrement,
-	title TEXT not null unique,
+	title TEXT NOT NULL UNIQUE,
 	votes INTEGER,
 	user_id INTEGER,
 	FOREIGN KEY(user_id) REFERENCES users(id)
@@ -21,7 +21,7 @@ CREATE TABLE topics (
 PRAGMA foreign_keys = ON;
 CREATE TABLE comments (
 	id INTEGER PRIMARY KEY autoincrement,
-	content TEXT not null,
+	content TEXT NOT NULL,
 	topic_id INTEGER,
 	user_id INTEGER,
 

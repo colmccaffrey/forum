@@ -65,6 +65,10 @@ app.get('/forum/topics/:title', function (req, res){  //renders page with commen
 	var title = req.params.title;
 	console.log("title " + title)
 	db.get("SELECT id FROM topics WHERE title= ?", req.params.title, function(err, topic){
+		if (err){
+			var error="Please create a username first.";
+			res.render('error.html.ejs', {error: error});
+		}else{
 		console.log("topicid" +topic.id);
 		db.all("SELECT comments.content AS content, comments.user_id AS user_id, comments.id AS id, users.name AS user_name, users.img AS image, users.id AS userId FROM comments INNER JOIN users ON comments.user_id = users.id WHERE topic_id = ?  ORDER BY id DESC", topic.id, function(err, comments){
 			db.get("SELECT count(*) AS count FROM comments WHERE topic_id = ?", topic.id, function(err, number){
@@ -74,11 +78,17 @@ app.get('/forum/topics/:title', function (req, res){  //renders page with commen
 				res.render('new.html.ejs', {comments: comments, title: title, number: number, topic: topic});
 				});
 			});
+			};
 		});
 	});
 
 app.post('/', function(req, res){ //inserts new user data into users table when user selects join from homepage (/forums)
-	db.run("INSERT INTO users (name, img) VALUES (?,?)", req.body.name, 'http://127.0.0.1:3000/images/default.png', function(err){
+	if (req.body.img === ""){
+		var image = "http://127.0.0.1:3000/images/default.png";
+	} else{
+		image = req.body.img;
+	}
+	db.run("INSERT INTO users (name, img) VALUES (?,?)", req.body.name, image, function(err){
 		if (err){
 			var error="That name is already taken";
 			res.render('error.html.ejs', {error: error});
@@ -96,7 +106,7 @@ app.post('/forum/topics/:title', function (req, res){ //inserts new comments int
 		var topicId = topic.id;
 		db.get("SELECT id FROM users WHERE name=?", userName, function(err, user){
 			if (user === undefined){
-			var error="You must create an account to leave comments.";
+			var error="Please create a username to leave comments.";
 			res.render('error.html.ejs', {error: error});
 			}else{
 			var userId = user.id;

@@ -63,10 +63,10 @@
 			</div>
 			<div class="pure-u-1 pure-u-md-2-3 pure-u-lg-2-3">
 			<form action='/forum/topics/<%=title%>' method='POST'>
-				<input type = "text" name="content" placeholder="comment">
-				<input type = "text" name="name" placeholder="username">
+				<input type = "text" name="content" placeholder="add new comment" required>
+				<input type = "text" name="name" placeholder="username" required>
 				<input class="hidden" type = "text" name="title" value="<%=title%>">
-				<button>comment</button>
+				<button>add</button>
 			</form>
 		</div>
 	</div>
