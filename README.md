@@ -38,9 +38,5 @@ RESTFUL ROUTES:
 
 *Can use the application on mobile devices
 
-![ERD](https://www.dropbox.com/home/Public/GA%20Project2?preview=ERD_forum.pdf)
-![wireframes](https://www.dropbox.com/home/Public/GA%20Project2?preview=IMG_4487.JPG)
-
-![project planning/more wireframes](https://www.dropbox.com/home/Public/GA%20Project2)
 
 
